@@ -41,7 +41,7 @@ namespace myu_live_sub_view
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(304, 841);
+            this.panel1.Size = new System.Drawing.Size(304, 861);
             this.panel1.TabIndex = 0;
             this.panel1.Visible = false;
             // 
@@ -49,7 +49,7 @@ namespace myu_live_sub_view
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 841);
+            this.ClientSize = new System.Drawing.Size(304, 861);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
