@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -17,10 +18,10 @@ namespace myu_live_sub_view
             InitializeComponent();
             cMyMenuHandler = new CMyMenuHandler(this);
 
-            // クライアント領域を、320 x 900 に固定する
-            Size size = new Size(320, 900);
+            Size size = new Size(384, 972);
             ClientSize = size;
             panel1.Size = size;
+            Text = "たて | myu-live-sub-view";
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -28,9 +29,6 @@ namespace myu_live_sub_view
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            // 画面初期化
-            ResetPortrait();
-
             // ブラウザの設定変更
             CefSettings settings = new CefSettings();
             var ci = CultureInfo.CurrentCulture;
@@ -39,6 +37,8 @@ namespace myu_live_sub_view
             settings.LogSeverity = LogSeverity.Disable;
             String cache_path = string.Format(@"{0}\cache", Application.StartupPath);
             settings.CachePath = cache_path;
+            String dldata_path = string.Format(@"{0}\download", Application.StartupPath);
+            settings.UserDataPath = dldata_path;
             Cef.Initialize(settings);
 
             // ブラウザを追加
@@ -47,10 +47,9 @@ namespace myu_live_sub_view
             WebBrowser.BackColor = Color.White;
             WebBrowser.Dock = DockStyle.Fill;
             WebBrowser.MenuHandler = cMyMenuHandler;
+            WebBrowser.DownloadHandler = new DownloadHandler();
             panel1.Controls.Add(WebBrowser);
             panel1.Visible = true;
-
-            //
             WebBrowser.LoadingStateChanged += OnLoadingStateChanged;
         }
         private void OnLoadingStateChanged(object sender, LoadingStateChangedEventArgs args)
@@ -67,6 +66,15 @@ namespace myu_live_sub_view
             Text = "たて | myu-live-sub-view";
             ClientSize = size;
             panel1.Size = size;
+            WebBrowser.Load(string.Format(@"{0}\resources\index.html", Application.StartupPath));
+        }
+        public void ResetPortraitB()
+        {
+            Size size = new Size(384, 972);
+            Text = "たて | myu-live-sub-view";
+            ClientSize = size;
+            panel1.Size = size;
+            WebBrowser.Load(string.Format(@"{0}\resources\index.html", Application.StartupPath));
         }
         // 横長で初期化
         public void ResetSideways()
@@ -75,6 +83,22 @@ namespace myu_live_sub_view
             Text = "よこ | myu-live-sub-view";
             ClientSize = size;
             panel1.Size = size;
+            WebBrowser.Load(string.Format(@"{0}\resources\index_yoko.html", Application.StartupPath));
+        }
+        public void ResetSidewaysB()
+        {
+            Size size = new Size(1536, 216);
+            Text = "よこ | myu-live-sub-view";
+            ClientSize = size;
+            panel1.Size = size;
+            WebBrowser.Load(string.Format(@"{0}\resources\index_yoko.html", Application.StartupPath));
+        }
+        public void PressCtrlAandC()
+        {
+            // すべて選択
+            SendKeys.SendWait("^a");
+            Thread.Sleep(25);
+            SendKeys.SendWait("^c");
         }
     }
 }
