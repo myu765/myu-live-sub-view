@@ -22,6 +22,7 @@ namespace myu_live_sub_view
             ClientSize = size;
             panel1.Size = size;
             Text = "たて | myu-live-sub-view";
+            TopMost = false;
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -93,12 +94,21 @@ namespace myu_live_sub_view
             panel1.Size = size;
             WebBrowser.Load(string.Format(@"{0}\resources\index_yoko.html", Application.StartupPath));
         }
+        // 全て選択してコピー
         public void PressCtrlAandC()
         {
-            // すべて選択
+            // すべて選択(Ctrl+A)
             SendKeys.SendWait("^a");
+            // ちょっと待機
             Thread.Sleep(25);
+            // コピー(Ctrl+C)
             SendKeys.SendWait("^c");
+        }
+        // 常に最前面に表示
+        public void TglTopMost()
+        {
+            // 常に最前面に表示の無効化と有効化を切り替える
+            TopMost = !TopMost;
         }
     }
 }

@@ -8,10 +8,12 @@ namespace myu_live_sub_view
     {
         Form1 _form1;
         public int windowType { get; set; }
+        public bool flgTopMost { get; set; }
         public CMyMenuHandler(Form1 form1)
         {
             _form1 = form1;
             windowType = 1;
+            flgTopMost = false;
         }
         public void OnBeforeContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model)
         {
@@ -19,7 +21,6 @@ namespace myu_live_sub_view
             model.Clear();
 
             // メニューは以下に追加
-            // model.AddCheckItem((CefMenuCommand)26501, "自動更新");
             model.AddItem((CefMenuCommand)26501, "全て選択してコピー (textarea)");
             model.AddSeparator();
             //model.AddItem((CefMenuCommand)26502, "再表示");
@@ -32,8 +33,8 @@ namespace myu_live_sub_view
             model.AddItem((CefMenuCommand)26507, "初期化 縦長  384 x 972");
             model.AddItem((CefMenuCommand)26508, "初期化 横長 1600 x 180");
             model.AddItem((CefMenuCommand)26509, "初期化 横長 1536 x 216");
-            // model.AddSeparator();
-            // model.AddItem((CefMenuCommand)26503, "Display alert message");
+            model.AddSeparator();
+            model.AddItem((CefMenuCommand)26510, "常に最前面に表示する");
 
             // ウィンドウの状態にチェックをつける
             model.SetChecked((CefMenuCommand)26506, false);
@@ -57,6 +58,8 @@ namespace myu_live_sub_view
                 default:
                     break;
             }
+            // 常に最前面に表示ならチェックをつける
+            if(flgTopMost) model.SetChecked((CefMenuCommand)26510, true);
         }
         public bool OnContextMenuCommand(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, CefMenuCommand commandId, CefEventFlags eventFlags)
         {
@@ -118,10 +121,10 @@ namespace myu_live_sub_view
                 return true;
             }
             // 横長で初期化
-            if (commandId == (CefMenuCommand)26509)
+            if (commandId == (CefMenuCommand)26510)
             {
-                windowType = 3;
-                _form1.Invoke(new Action(_form1.ResetSidewaysB));
+                flgTopMost = !flgTopMost;
+                _form1.Invoke(new Action(_form1.TglTopMost));
                 return true;
             }
             return false;
