@@ -121,7 +121,7 @@ namespace myu_live_sub_view
                 return true;
             }
             // 横長で初期化
-            if (commandId == (CefMenuCommand)26508)
+            if (commandId == (CefMenuCommand)26509)
             {
                 windowType = 3;
                 _form1.Invoke(new Action(_form1.ResetSidewaysB));
