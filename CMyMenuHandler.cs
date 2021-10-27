@@ -120,7 +120,7 @@ namespace myu_live_sub_view
                 _form1.Invoke(new Action(_form1.ResetSideways));
                 return true;
             }
-            // 横長で初期化
+            // 常に最前面に表示
             if (commandId == (CefMenuCommand)26510)
             {
                 flgTopMost = !flgTopMost;
