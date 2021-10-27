@@ -120,6 +120,13 @@ namespace myu_live_sub_view
                 _form1.Invoke(new Action(_form1.ResetSideways));
                 return true;
             }
+            // 横長で初期化
+            if (commandId == (CefMenuCommand)26508)
+            {
+                windowType = 3;
+                _form1.Invoke(new Action(_form1.ResetSidewaysB));
+                return true;
+            }
             // 常に最前面に表示
             if (commandId == (CefMenuCommand)26510)
             {
